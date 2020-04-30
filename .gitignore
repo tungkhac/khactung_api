@@ -1,0 +1,12 @@
+logs
+*.log
+pids
+node_modules
+.npm
+*.dat
+config/default.json
+.idea
+
+// Dont push code build
+routes/trendexpress.js
+/.idea/

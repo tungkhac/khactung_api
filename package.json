@@ -1,0 +1,34 @@
+{
+  "name": "dobo",
+  "version": "1.0.0",
+  "description": "Dobo team",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wevnal/dobo.git"
+  },
+  "keywords": [
+    "Angelhack"
+  ],
+  "author": "Dobo team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wevnal/dobo/issues"
+  },
+  "homepage": "https://github.com/wevnal/dobo#readme",
+  "dependencies": {
+    "config": "^1.26.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "moment-timezone": "^0.5.21",
+    "mongoose": "^4.10.8",
+    "morgan": "~1.9.0"
+  }
+}
