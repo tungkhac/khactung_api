@@ -4,7 +4,7 @@ var config = require('config');
 
 mongoose.Promise = global.Promise;
 
-const DomoSchema = new Schema({
+/*const DomoSchema = new Schema({
     points: Number,
     description: String,
     title: String,
@@ -27,4 +27,4 @@ mongoose.connect(config.get('dbURL'), options, function(err) {
     console.log("connect mongodb done");
 });
 
-exports.DomoSchema = mongoose.model('DomoSchema', DomoSchema);
+exports.DomoSchema = mongoose.model('DomoSchema', DomoSchema);*/
