@@ -9,7 +9,7 @@ var g_vietnam_locality = require('../data/vietnam_locality.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Welcome to Khac Tung API' });
+  res.render('index', { title: 'Khac Tung API', label: 'Welcome to Khac Tung API' });
 });
 
 /*router.get('/demo/vnpost', function(req, res, next) {
