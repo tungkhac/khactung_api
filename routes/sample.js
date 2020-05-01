@@ -6,7 +6,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/getMenu', function (req, res, next) {
+router.post('/getMenu', function (req, res, next) {
     var response_data = {
         menu: [
             {
