@@ -4,7 +4,7 @@ pids
 node_modules
 .npm
 *.dat
-config/default.json
+//config/default.json
 .idea
 
 // Dont push code build
