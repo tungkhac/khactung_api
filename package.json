@@ -1,5 +1,5 @@
 {
-  "name": "KhacTung API",
+  "name": "khactung_api",
   "version": "1.0.0",
   "description": "KhacTung API data",
   "main": "app.js",
