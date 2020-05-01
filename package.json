@@ -1,7 +1,7 @@
 {
-  "name": "dobo",
+  "name": "KhacTung API",
   "version": "1.0.0",
-  "description": "Dobo team",
+  "description": "KhacTung API data",
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wevnal/dobo.git"
+    "url": "git+https://github.com/tungkhac/khactung_api"
   },
   "keywords": [
-    "Angelhack"
+    "khactung"
   ],
-  "author": "Dobo team",
+  "author": "KhacTung",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wevnal/dobo/issues"
+    "url": "https://github.com/tungkhac/khactung_api/issues"
   },
-  "homepage": "https://github.com/wevnal/dobo#readme",
+  "homepage": "https://github.com/tungkhac/khactung_api#readme",
   "dependencies": {
     "config": "^1.26.2",
     "cookie-parser": "~1.4.3",

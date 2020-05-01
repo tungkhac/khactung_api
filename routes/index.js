@@ -1,6 +1,6 @@
 /*
-* Author: Dobo team
-* Date: 15/6/2019
+* Author: Khactung
+* Date: 01/05/2020
 * */
 
 var express = require('express');
@@ -9,15 +9,15 @@ var g_vietnam_locality = require('../data/vietnam_locality.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'ANGELHACK VIETNAM HACKATHON 2019', teamName: 'DoBo team' });
+  res.render('index', { title: 'Welcome to Khac Tung API' });
 });
 
-router.get('/demo/vnpost', function(req, res, next) {
+/*router.get('/demo/vnpost', function(req, res, next) {
     res.render('vnpost', {});
 });
 router.get('/demo/vnpost2', function(req, res, next) {
     res.render('vnpost2', {});
-});
+});*/
 
 const g_scope_code = {
     insite: '001',
