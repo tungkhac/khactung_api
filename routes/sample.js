@@ -6,6 +6,22 @@
 var express = require('express');
 var router = express.Router();
 
+router.post('/wait', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    var body = req.body,
+        timeout = body.timeout;
+
+    setTimeout(function () {
+        res.json({
+            status: true,
+            timeout: timeout,
+        });
+    }, parseFloat(timeout) * 1000);
+});
+
+
 router.post('/getMenu', function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
