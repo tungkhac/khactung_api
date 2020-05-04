@@ -15,7 +15,7 @@ router.post('/wait', function (req, res, next) {
 
     setTimeout(function () {
         res.json({
-            status: true,
+            success: true,
             timeout: timeout,
         });
     }, parseFloat(timeout) * 1000);
