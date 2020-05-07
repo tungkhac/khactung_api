@@ -213,7 +213,7 @@ router.get('/product', function (req, res, next) {
 
 //get ramdom in array: from0 - length
 function getRamdomArr(arr) {
-    return Math.round(Math.random()*arr.length);
+    return arr[Math.round(Math.random()*arr.length)];
 }
 function getRamdomPrice(max) {
     if(!max) max = 1000; //if not set: set default 1000
