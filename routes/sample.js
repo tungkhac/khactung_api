@@ -161,8 +161,9 @@ router.get('/product', function (req, res, next) {
         det_10: 'Dệt 10/10',
         nhabe: 'Nhà Bè - NBC'
     };
-    var color_list = ['Blue', 'While', 'Black', 'Green', 'Oảmge', 'Gray'];
+    var color_list = ['Blue', 'While', 'Black', 'Green', 'Orange', 'Gray'];
     var size_list = ['xs', 's', 'm', 'sm', 'l', 'xl', 'xxl'];
+    var type_list = ['Vintage', 'Sophisticated', 'Bohemian', 'Chic', 'Artsy', 'Sexy', 'Casual', 'Tomboy', 'Rocker'];
     var result = [];
 
     for(let i=0; i<limit; i++) {
@@ -179,7 +180,7 @@ router.get('/product', function (req, res, next) {
 
         result.push({
             title: p_title,
-            type: "free style",
+            type: type_list[getRamdomArr(Object.keys(type_list))],
             text: "Memories define us. So what if you lost yours every time you went to sleep? Your name, your identity, your past, even the people you love -- all forgotten overnight. And the one person you trust may be telling you only half the story. Before I Go To Sleep is a disturbing psychological thriller in which an amnesiac desperately tries to uncover the truth about who she is and who she can trust.",
             regularPrice: p_price,
             offerPrice: p_price_offer,
