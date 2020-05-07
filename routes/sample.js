@@ -216,7 +216,8 @@ function getRamdomArr(arr) {
     return arr[Math.round(Math.random()*arr.length)];
 }
 function getRamdomPrice(max) {
-    if(!max) max = 1000; //if not set: set default 1000
+    //if not set: set default 1000
+    max = (!isNaN(max)) ? parseFloat(max) : 1000;
     return (Math.random()*max).toFixed(2);
 }
 
