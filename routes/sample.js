@@ -166,7 +166,7 @@ router.get('/product', function (req, res, next) {
     var result = [];
 
     for(let i=0; i<limit; i++) {
-        var p_title = "Product 00" + (i + 1);
+        var p_title = "Product 0" + (i + 1);
         var p_size = [getRamdomArr(size_list)];
         var p_size2 = getRamdomArr(size_list);
         if(p_size.indexOf(p_size2) != -1) {
@@ -176,14 +176,14 @@ router.get('/product', function (req, res, next) {
         var p_price_offer = getRamdomPrice(p_price);
 
         result.push({
-            title: "Product 00" + (i + 1),
+            title: p_title,
             type: "free style",
             text: "Memories define us. So what if you lost yours every time you went to sleep? Your name, your identity, your past, even the people you love -- all forgotten overnight. And the one person you trust may be telling you only half the story. Before I Go To Sleep is a disturbing psychological thriller in which an amnesiac desperately tries to uncover the truth about who she is and who she can trust.",
             regularPrice: p_price,
             offerPrice: p_price_offer,
             saveAmount: p_price - p_price_offer,
             currencySymbol: '$',
-            link: "/products/product-00" + (i + 1),
+            link: "/products/product-0" + (i + 1),
             availability: Math.round(Math.random()),
             brand: (brand_list[brand] != void 0) ? brand_list[brand] : brand_list[getRamdomArr(Object.keys(brand_list))],//get random 0 - length
             color: getRamdomArr(color_list),//get random 0 - length
