@@ -179,8 +179,8 @@ router.get('/product', function (req, res, next) {
             title: "Product 00" + (i + 1),
             type: "free style",
             text: "Memories define us. So what if you lost yours every time you went to sleep? Your name, your identity, your past, even the people you love -- all forgotten overnight. And the one person you trust may be telling you only half the story. Before I Go To Sleep is a disturbing psychological thriller in which an amnesiac desperately tries to uncover the truth about who she is and who she can trust.",
-            offerPrice: p_price,
-            regularPrice: p_price_offer,
+            regularPrice: p_price,
+            offerPrice: p_price_offer,
             saveAmount: p_price - p_price_offer,
             currencySymbol: '$',
             link: "/products/product-00" + (i + 1),
@@ -203,7 +203,14 @@ router.get('/product', function (req, res, next) {
 
     res.status(200).json({
         success: true,
-        data: result
+        data: result,
+        filter: {
+            brand: brand,
+        },
+        pagination: {
+            page: page,
+            limit: limit
+        }
     });
     // res.json({
     //     success: true,
