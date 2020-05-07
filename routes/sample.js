@@ -167,11 +167,13 @@ router.get('/product', function (req, res, next) {
 
     for(let i=0; i<limit; i++) {
         var p_title = "Product 0" + (i + 1);
-        var p_size = [getRamdomArr(size_list)];
-        var p_size2 = getRamdomArr(size_list);
+
+        var p_size = [size_list[getRamdomArr(Object.keys(size_list))]];
+        var p_size2 = size_list[getRamdomArr(Object.keys(size_list))];
         if(p_size.indexOf(p_size2) != -1) {
             p_size.push(p_size2);
         }
+
         var p_price = getRamdomPrice();
         var p_price_offer = getRamdomPrice(p_price);
 
@@ -217,6 +219,7 @@ router.get('/product', function (req, res, next) {
     //     data: result
     // });
 });
+
 
 //get ramdom in array: from0 - length
 function getRamdomArr(arr) {
