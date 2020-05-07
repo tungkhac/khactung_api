@@ -140,4 +140,84 @@ router.post('/getMenu', function (req, res, next) {
     res.json(response_data);
 });
 
+
+router.get('/product', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    var query = req.query,
+        limit = (!isNaN(query.limit) && parseInt(query.limit)) ? parseInt(query.limit) : 10,
+        page = (!isNaN(query.page) && parseInt(query.page)) ? parseInt(query.page) : 1,
+        brand = query.brand;
+
+    var brand_list = {
+        canifa: 'Canifa',
+        giditex: 'Giditex',
+        vinatex: 'Vinatex',
+        hanosimex: 'Hanosimex',
+        viettien: 'Việt Tiến',
+        songhong: 'Sông Hồng',
+        may_10: 'May 10',
+        det_10: 'Dệt 10/10',
+        nhabe: 'Nhà Bè - NBC'
+    };
+    var color_list = ['Blue', 'While', 'Black', 'Green', 'Oảmge', 'Gray'];
+    var size_list = ['xs', 's', 'm', 'sm', 'l', 'xl', 'xxl'];
+    var result = [];
+
+    for(let i=0; i<limit; i++) {
+        var p_title = "Product 00" + (i + 1);
+        var p_size = [getRamdomArr(size_list)];
+        var p_size2 = getRamdomArr(size_list);
+        if(p_size.indexOf(p_size2) != -1) {
+            p_size.push(p_size2);
+        }
+        var p_price = getRamdomPrice();
+        var p_price_offer = getRamdomPrice(p_price);
+
+        result.push({
+            title: "Product 00" + (i + 1),
+            type: "free style",
+            text: "Memories define us. So what if you lost yours every time you went to sleep? Your name, your identity, your past, even the people you love -- all forgotten overnight. And the one person you trust may be telling you only half the story. Before I Go To Sleep is a disturbing psychological thriller in which an amnesiac desperately tries to uncover the truth about who she is and who she can trust.",
+            offerPrice: p_price,
+            regularPrice: p_price_offer,
+            saveAmount: p_price - p_price_offer,
+            currencySymbol: '$',
+            link: "/products/product-00" + (i + 1),
+            availability: Math.round(Math.random()),
+            brand: (brand_list[brand] != void 0) ? brand_list[brand] : brand_list[getRamdomArr(Object.keys(brand_list))],//get random 0 - length
+            color: getRamdomArr(color_list),//get random 0 - length
+            sizes: p_size,//get random 0 - length
+            images: [
+                {
+                    title: "Title of " + p_title,
+                    url: "",
+                },
+                {
+                    title: "Before I Go to Sleep cover",
+                    url: "",
+                }
+            ]
+        });
+    }
+
+    res.status(200).json({
+        success: true,
+        data: result
+    });
+    // res.json({
+    //     success: true,
+    //     data: result
+    // });
+});
+
+//get ramdom in array: from0 - length
+function getRamdomArr(arr) {
+    return Math.round(Math.random()*arr.length);
+}
+function getRamdomPrice(max) {
+    if(!max) max = 1000; //if not set: set default 1000
+    return (Math.random()*max).toFixed(2);
+}
+
 module.exports = router;
