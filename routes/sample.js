@@ -170,7 +170,7 @@ router.get('/product', function (req, res, next) {
 
         var p_size = [size_list[getRamdomArr(Object.keys(size_list))]];
         var p_size2 = size_list[getRamdomArr(Object.keys(size_list))];
-        if(p_size.indexOf(p_size2) != -1) {
+        if(p_size.indexOf(p_size2) <= -1) {
             p_size.push(p_size2);
         }
 
@@ -183,7 +183,7 @@ router.get('/product', function (req, res, next) {
             text: "Memories define us. So what if you lost yours every time you went to sleep? Your name, your identity, your past, even the people you love -- all forgotten overnight. And the one person you trust may be telling you only half the story. Before I Go To Sleep is a disturbing psychological thriller in which an amnesiac desperately tries to uncover the truth about who she is and who she can trust.",
             regularPrice: p_price,
             offerPrice: p_price_offer,
-            saveAmount: p_price - p_price_offer,
+            saveAmount: (p_price - p_price_offer).toFixed(2),
             currencySymbol: '$',
             link: "/products/product-0" + (i + 1),
             availability: Math.round(Math.random()),
