@@ -5,6 +5,17 @@
 
 var express = require('express');
 var router = express.Router();
+const _brand_list = {
+    canifa: 'Canifa',
+    giditex: 'Giditex',
+    vinatex: 'Vinatex',
+    hanosimex: 'Hanosimex',
+    viettien: 'Việt Tiến',
+    songhong: 'Sông Hồng',
+    may_10: 'May 10',
+    det_10: 'Dệt 10/10',
+    nhabe: 'Nhà Bè - NBC'
+};
 
 router.post('/wait', function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -140,6 +151,15 @@ router.post('/getMenu', function (req, res, next) {
     res.json(response_data);
 });
 
+router.get('/brand', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    res.status(200).json({
+        success: true,
+        data: _brand_list,
+    });
+});
 
 router.get('/product', function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -150,17 +170,6 @@ router.get('/product', function (req, res, next) {
         page = (!isNaN(query.page) && parseInt(query.page)) ? parseInt(query.page) : 1,
         brand = query.brand;
 
-    var brand_list = {
-        canifa: 'Canifa',
-        giditex: 'Giditex',
-        vinatex: 'Vinatex',
-        hanosimex: 'Hanosimex',
-        viettien: 'Việt Tiến',
-        songhong: 'Sông Hồng',
-        may_10: 'May 10',
-        det_10: 'Dệt 10/10',
-        nhabe: 'Nhà Bè - NBC'
-    };
     var color_list = ['Blue', 'While', 'Black', 'Green', 'Orange', 'Gray'];
     var size_list = ['xs', 's', 'm', 'sm', 'l', 'xl', 'xxl'];
     var type_list = ['Vintage', 'Sophisticated', 'Bohemian', 'Chic', 'Artsy', 'Sexy', 'Casual', 'Tomboy', 'Rocker'];
@@ -188,7 +197,7 @@ router.get('/product', function (req, res, next) {
             currencySymbol: '$',
             link: "/products/product-0" + (i + 1),
             availability: Math.round(Math.random()),
-            brand: (brand_list[brand] != void 0) ? brand_list[brand] : brand_list[getRamdomArr(Object.keys(brand_list))],//get random 0 - length
+            brand: (_brand_list[brand] != void 0) ? _brand_list[brand] : _brand_list[getRamdomArr(Object.keys(_brand_list))],//get random 0 - length
             color: getRamdomArr(color_list),//get random 0 - length
             sizes: p_size,//get random 0 - length
             images: [
@@ -215,10 +224,6 @@ router.get('/product', function (req, res, next) {
             limit: limit
         }
     });
-    // res.json({
-    //     success: true,
-    //     data: result
-    // });
 });
 
 
