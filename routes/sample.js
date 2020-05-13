@@ -166,7 +166,7 @@ router.get('/product', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
     var query = req.query,
-        timeout = (!isNaN(query.timeout)) ? parseInt(query.timeout) : 0,
+        timeout = (!isNaN(query.timeout)) ? parseInt(query.timeout) : 2,
         limit = (!isNaN(query.limit) && parseInt(query.limit)) ? parseInt(query.limit) : 10,
         page = (!isNaN(query.page) && parseInt(query.page)) ? parseInt(query.page) : 1,
         brand = query.brand;
