@@ -229,6 +229,51 @@ router.get('/product', function (req, res, next) {
     }, timeout * 1000);
 });
 
+router.get('/page', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    var query = req.query,
+        content = query.content;
+
+    var template = {
+        blog: {
+            title: 'Blog',
+            content: "<p>This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:</p>"+
+                '<blockquote>'+
+                    "<p>Hi there! I'm a bike messenger by day, aspiring actor by night, and this is my blog. I live in Los Angeles, have a great dog named Jack, and I like piña coladas. (And gettin' caught in the rain.)</p>" +
+                '</blockquote>'+
+                '<p>...or something like this:</p>'+
+                '<blockquote>'+
+                    '<p>The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickeys to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.</p>'+
+                '</blockquote>'+
+                '<p>As a new WordPress user, you should go to <a href="http://khactung.com/wp-admin/">your dashboard</a> to delete this page and create new pages for your content. Have fun!</p>"',
+        },
+        service: {
+            title: 'Us services',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+        },
+        contact: {
+            title: 'Contact',
+            content: '<h1>&lt;h1&gt; to &lt;h6&gt; - Headline Colour and Size Are All The Same</h1>' +
+                '<img class="imgr borderedbox inspace-5" src="../images/demo/imgr.gif" alt="">' +
+                '<p>Aliquatjusto quisque nam consequat doloreet vest orna partur scetur portortis nam. Metadipiscing eget facilis elit sagittis felisi eger id justo maurisus convallicitur.</p>' +
+                '<p>Dapiensociis <a href="#">temper donec auctortortis cumsan</a> et curabitur condis lorem loborttis leo. Ipsumcommodo libero nunc at in velis tincidunt pellentum tincidunt vel lorem.</p>' +
+                '<img class="imgl borderedbox inspace-5" src="../images/demo/imgl.gif" alt="">' +
+                '<p>You can use and modify the template for both personal and commercial use. You must keep all copyright information and credit links in the template and associated files. For more website templates visit our <a href="http://www.os-templates.com/">free website templates</a> section.</p>' +
+                '<p>Portortornec condimenterdum eget consectetuer condis consequam pretium pellus sed mauris enim. Puruselit mauris nulla hendimentesque elit semper nam a sapien urna sempus.</p>'
+        },
+    };
+
+    res.status(200).json({
+        success: true,
+        data: (template[content] != void 0) ? template[content] : null,
+        filter: {
+            content: content,
+        },
+    });
+});
+
 
 //get ramdom in array: from0 - length
 function getRamdomArr(arr) {
