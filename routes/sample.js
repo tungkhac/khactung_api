@@ -287,7 +287,7 @@ router.post('/upload', function (req, res, next) {
     };
     
     try {
-        console.log(req.files);
+        // console.log(req.files);
         if(!req.files || !req.files.file_upload) {
             result.message = 'No file uploaded (field name: file_upload)';
             res.status(200).send(result);
