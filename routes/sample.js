@@ -304,7 +304,7 @@ router.post('/upload', function (req, res, next) {
             result.data = {
                 name: file_input.name,
                 mimetype: file_input.mimetype,
-                size: file_input.size * 1024 * 1024 * 1024 + 'Mb'
+                size: (file_input.size/1024/1024).toFixed(2) + 'Mb'
             };
             res.status(200).send(result);
         }
