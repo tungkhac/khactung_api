@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
 var sampleRouter = require('./routes/sample');
@@ -12,6 +15,15 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// enable files upload
+app.use(fileUpload({
+  createParentPath: true
+}));
+//add other middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(logger('dev'));
 app.use(express.json());

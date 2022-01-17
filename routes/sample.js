@@ -5,6 +5,12 @@
 
 var express = require('express');
 var router = express.Router();
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const _ = require('lodash');
+
 const _brand_list = {
     canifa: 'Canifa',
     giditex: 'Giditex',
@@ -280,11 +286,35 @@ router.post('/upload', function (req, res, next) {
 
     var body = req.body;
     console.log('Body: ', body);
-
+    
     var result = {
-        status: 'OK',
+        status: 'NG',
     };
-    res.status(200).send(result);
+    
+    try {
+        if(!req.files) {
+            result.message = 'No file uploaded';
+            res.status(200).send(result);
+            
+        } else {
+            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+            let file_input = req.files.file_upload;
+
+            //Use the mv() method to place the file in upload directory (i.e. "uploads")
+            avatar.mv('./public/uploads/' + file_input.name);
+
+            //send response
+            result.message = 'File is uploaded';
+            result.data = {
+                name: file_input.name,
+                mimetype: file_input.mimetype,
+                size: file_input.size
+            };
+            res.status(200).send(result);
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 
