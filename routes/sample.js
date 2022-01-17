@@ -274,6 +274,19 @@ router.get('/page', function (req, res, next) {
     });
 });
 
+router.post('/upload', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    var body = req.body;
+    console.log('Body: ', body);
+
+    var result = {
+        status: 'OK',
+    };
+    res.status(200).send(result);
+});
+
 
 //get ramdom in array: from0 - length
 function getRamdomArr(arr) {
