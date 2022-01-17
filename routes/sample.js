@@ -5,11 +5,6 @@
 
 var express = require('express');
 var router = express.Router();
-const fileUpload = require('express-fileupload');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const _ = require('lodash');
 
 const _brand_list = {
     canifa: 'Canifa',
@@ -292,8 +287,9 @@ router.post('/upload', function (req, res, next) {
     };
     
     try {
-        if(!req.files) {
-            result.message = 'No file uploaded';
+        console.log(req.files);
+        if(!req.files || !req.files.file_upload) {
+            result.message = 'No file uploaded (field name: file_upload)';
             res.status(200).send(result);
             
         } else {
@@ -301,18 +297,19 @@ router.post('/upload', function (req, res, next) {
             let file_input = req.files.file_upload;
 
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            avatar.mv('./public/uploads/' + file_input.name);
+            file_input.mv('./public/uploads/' + file_input.name);
 
             //send response
             result.message = 'File is uploaded';
             result.data = {
                 name: file_input.name,
                 mimetype: file_input.mimetype,
-                size: file_input.size
+                size: file_input.size * 1024 * 1024 * 1024 + 'Mb'
             };
             res.status(200).send(result);
         }
     } catch (err) {
+        console.log('Upload error: ', err);
         res.status(500).send(err);
     }
 });
