@@ -4,7 +4,9 @@
  * */
 
 var express = require('express');
+var common = require('../module/common');
 var router = express.Router();
+const path = require('path');
 
 const _brand_list = {
     canifa: 'Canifa',
@@ -314,6 +316,29 @@ router.post('/upload', function (req, res, next) {
     }
 });
 
+/*Demo download file
+* Url access: 
+*   /sample/text1/download
+*   /sample/text2/download
+* */
+router.get('/:code/download', async function(req, res){
+    try {
+        const file_code = req.params.code;
+        const file_name = file_code + '.txt';
+        const file_path = `./public/download/${file_name}`;
+        
+        console.log('- Request download ' + file_path);
+        if (file_code && await common.isFileExist(file_path)) {
+            console.log('-> Downloading');
+            return res.download(file_path, file_name); // Set disposition and send it.
+        } else {
+            console.log('-> Download false');
+        }
+        return res.status(200).send(`File <b>${file_name}</b> is not exist!`);
+    } catch(e) {
+        return res.status(200).send(`No such file or directory`);
+    }
+});
 
 //get ramdom in array: from0 - length
 function getRamdomArr(arr) {
