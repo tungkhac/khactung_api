@@ -318,13 +318,12 @@ router.post('/upload', function (req, res, next) {
 
 /*Demo download file
 * Url access: 
-*   /sample/text1/download
-*   /sample/text2/download
+*   /sample/text1.txt/download
+*   /sample/text2.txt/download
 * */
 router.get('/:code/download', async function(req, res){
     try {
-        const file_code = req.params.code;
-        const file_name = file_code + '.txt';
+        const file_name = req.params.code;
         const file_path = `./public/download/${file_name}`;
         
         console.log('- Request download ' + file_path);
