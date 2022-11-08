@@ -327,7 +327,7 @@ router.get('/:code/download', async function(req, res){
         const file_path = `./public/download/${file_name}`;
         
         console.log('- Request download ' + file_path);
-        if (file_code && await common.isFileExist(file_path)) {
+        if (file_name && await common.isFileExist(file_path)) {
             console.log('-> Downloading');
             return res.download(file_path, file_name); // Set disposition and send it.
         } else {
