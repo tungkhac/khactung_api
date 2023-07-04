@@ -1,0 +1,28 @@
+extends layout
+block content
+    style(type='text/css')
+       .red {
+            color: red;
+       }
+       .green {
+           color: green;
+       }
+       
+    h1= label
+    h3= data.title
+    
+        
+    - for(let i=(data.ticketData.length-1); i>=0; i--) {
+        - ticket= data.ticketData[i]
+        b=`${i+1}. ${ticket.title} (id: ${ticket.id})`
+        <br/>
+        p=`Max order: ${ticket.maxOrder}`
+        p='Available: '
+            span(class=ticket.available ? 'green' : 'red')=ticket.available
+        p=`Soldout: `
+            span(class=ticket.soldOut ? 'red' : 'green')=ticket.soldOut
+        p=`Hidden: `
+            span(class=ticket.hidden ? 'red' : 'green')=ticket.hidden
+        p=`Closed: `
+            span(class=ticket.closed ? 'red' : 'green')=ticket.closed
+    - }

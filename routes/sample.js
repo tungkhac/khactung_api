@@ -21,9 +21,6 @@ const _brand_list = {
 };
 
 router.post('/wait', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     var body = req.body,
         timeout = body.timeout;
 
@@ -37,9 +34,6 @@ router.post('/wait', function (req, res, next) {
 
 
 router.post('/getMenu', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     var response_data = {
         menu: [
             {
@@ -155,9 +149,6 @@ router.post('/getMenu', function (req, res, next) {
 });
 
 router.get('/brand', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     res.status(200).json({
         success: true,
         data: _brand_list,
@@ -165,9 +156,6 @@ router.get('/brand', function (req, res, next) {
 });
 
 router.get('/product', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     var query = req.query,
         timeout = (!isNaN(query.timeout)) ? parseInt(query.timeout) : 2,
         limit = (!isNaN(query.limit) && parseInt(query.limit)) ? parseInt(query.limit) : 10,
@@ -233,9 +221,6 @@ router.get('/product', function (req, res, next) {
 });
 
 router.get('/page', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     var query = req.query,
         content = query.content;
 
@@ -278,9 +263,6 @@ router.get('/page', function (req, res, next) {
 });
 
 router.post('/upload', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     var body = req.body;
     console.log('Body: ', body);
     
