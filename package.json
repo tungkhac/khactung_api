@@ -22,7 +22,7 @@
   "homepage": "https://github.com/tungkhac/khactung_api#readme",
   "dependencies": {
     "body-parser": "^1.19.1",
-    "config": "^1.26.2",
+    "config": "^3.3.8",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
