@@ -1,8 +1,4 @@
-https://ticketbox.vn/event/87554/ticket-booking
-
--> https://ticketbox.vn/event/87554/ticket-booking/75060#/step-select-tickets
-
-
+Document URL: https://github.com/tungkhac/khactung_api/blob/master/public/document/ticketbox.md
 
 ##### ACC 1:
 ```
