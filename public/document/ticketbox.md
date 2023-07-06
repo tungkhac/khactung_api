@@ -11,7 +11,7 @@ tungnk.hn@gmail.com
 ##### ACC 2:
 ```
 Nguyễn Khắc Tùng
-084775163382
+0775163382
 khactung9x@gmail.com
 ```
 
@@ -88,7 +88,7 @@ https://ticketbox.vn/api/event/87284/ticket-booking/74120/submit-order
         "email": "khactung9x@gmail.com",
         "firstName": "khac tung",
         "lastName": "Nguyen",
-        "phoneNumber": "084775163382"
+        "phoneNumber": "0775163382"
     },
     "subcribeMail": true,
     "paymentInfo": {
@@ -179,3 +179,411 @@ https://ticketbox.vn/api/event/87284/ticket-booking/74120/submit-order
     "secretKey": ""
 }
 ```
+
+
+##### Code auto
+
+```
+window.onload = function () {
+    const keyworld = "VIP";
+    const email = "khactung9x@gmail.com";
+    const pass = "";
+    const phone = "0775163382";
+    const firstName = "Tung";
+    const lastName = "Nguyen Khac";
+    setTimeout(() => {
+
+        if (
+            window.location.href.includes("event") &&
+            window.location.href.includes("ticket-booking")
+        ) {
+
+            if (window.location.href.includes("step-question-form")) {
+                setTimeout(()=>{
+                    window.location.reload();
+                },5000);
+                let nameUrl = window.location.pathname.split("/");
+                const idEvent = nameUrl[2];
+                const idMap = nameUrl[4];
+                // https://ticketbox.vn/api/event/${idEvent}/ticket-booking/74772/submit-form-answers
+                var request = $.ajax({
+                    url: `https://ticketbox.vn/api/event/${idEvent}/ticket-booking/${idMap}/event-info/false`,
+                    type: "get",
+                });
+                request.done(function (data) {
+                    console.log(data);
+                    var typeTicket = data.currentShowing.ticketTypes || [];
+                    var ticketName = keyworld ? keyworld.toUpperCase() : "VIP";
+                    var ticketSelect = typeTicket[0] || null;
+                    if (typeTicket.length > 0) {
+                        typeTicket.map((x) => {
+                            if (
+                                x.title.toUpperCase().includes(ticketName) &&
+                                x.displayOrder != 0
+                            ) {
+                                ticketSelect = x;
+                                return;
+                            }
+                        });
+                    }
+                    var question = data.form ? data.form.ticketFormQuestions : [];
+                    var formAnswers = [];
+                    function answerData (q) {
+                        var upQuestion = q.toUpperCase();
+                        if(upQuestion.includes('TÊN') && upQuestion.includes('HỌ')){
+                            return lastName + ' ' + firstName;
+                        }
+                        if(upQuestion.includes('TÊN')){
+                            return firstName;
+                        }
+                        if(upQuestion.includes('HỌ')){
+                            return lastName;
+                        }
+                        if(upQuestion.includes('EMAIL')){
+                            return email;
+                        }
+                        if(upQuestion.includes('SỐ')){
+                            return phone;
+                        }
+                        if(upQuestion.includes('SINH')){
+                            return '16/08/1989';
+                        }
+
+                        return 'Email: ' + email + '. SDT: '+phone;
+                    }
+                    question.map((x) => {
+                        if(x.type === 1){
+                            formAnswers.push({
+                                id: 0,
+                                formAnswerSheetId: 0,
+                                formQuestionId: x.id,
+                                formAnswerChoices: [
+                                    {
+                                        id: 0,
+                                        formAnswerId: 0,
+                                        formAnswerChoiceComponents: [
+                                            {
+                                                id: 0,
+                                                formAnswerChoiceId: 0,
+                                                formQuestionOptionId: null,
+                                                answer: answerData(x.question),
+                                            },
+                                        ],
+                                    },
+                                ],
+                                show: true,
+                            });
+                        }
+
+                        if(x.type === 3){
+                            formAnswers.push({
+                                id: 0,
+                                formAnswerSheetId: 0,
+                                formQuestionId: x.id,
+                                formAnswerChoices: [
+                                    {
+                                        id: 0,
+                                        formAnswerId: 0,
+                                        formAnswerChoiceComponents: [
+                                            {
+                                                id: 0,
+                                                formAnswerChoiceId: 0,
+                                                formQuestionOptionId: x.formQuestionOptions[0].id,
+                                                answer:  x.formQuestionOptions[0].optionText,
+                                            },
+                                        ],
+                                    },
+                                ],
+                                show: true,
+                            });
+                        }
+
+                    });
+                    $.ajax({
+                        url: `https://ticketbox.vn/api/event/${idEvent}/ticket-booking/${idMap}/submit-form-answers`,
+                        type: "POST",
+                        data: JSON.stringify({
+                            commonFormAnswerSheet: null,
+                            formAnswerSheets: [
+                                {
+                                    id: 0,
+                                    eventId: idEvent,
+                                    ticketTypeId: ticketSelect.id,
+                                    ticketId: null,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    email: email,
+                                    phoneNumber: phone,
+                                    website: null,
+                                    company: null,
+                                    jobTitle: null,
+                                    isCommonForOrder: false,
+                                    formAnswers: formAnswers,
+                                    ticketType: ticketSelect,
+                                    open: true,
+                                    valid: true,
+                                }
+                            ],
+                            secretKey: "",
+                        }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (dt) {
+                            if (dt.buyerInfo) {
+                                console.log("OK", dt);
+                                window.location.replace(
+                                    `https://ticketbox.vn/event/${idEvent}/ticket-booking/${idMap}?opm=tbox.edp.buybox.7#/step2`
+                                );
+                            } else {
+                                setTimeout(()=>{
+                                    window.location.reload();
+                                },2000);
+
+                            }
+                        },
+                    });
+                });
+
+            }
+            if (window.location.href.includes("step-select-tickets")) {
+                setTimeout(()=>{
+                    window.location.reload();
+                },30000);
+                let nameUrl = window.location.pathname.split("/");
+                const idEvent = nameUrl[2];
+                const idMap = nameUrl[4];
+                var ticketOrder = [];
+                var request = $.ajax({
+                    url: `https://ticketbox.vn/api/event/${idEvent}/ticket-booking/${idMap}/event-info/false`,
+                    type: "get",
+                });
+                request.done(function (data) {
+                    console.log(data);
+                    // cau hoi
+                    var question = data.form ? data.form.ticketFormQuestions : [];
+                    console.log("question", question);
+                    // loai ve
+                    var typeTicket = data.currentShowing.ticketTypes || [];
+                    var ticketName = keyworld ? keyworld.toUpperCase() : "VIP";
+                    var ticketSelect = typeTicket[0] || null;
+                    if (typeTicket.length > 0) {
+                        typeTicket.map((x) => {
+                            if (
+                                x.title.toUpperCase().includes(ticketName) &&
+                                x.displayOrder != 0
+                            ) {
+                                ticketSelect = x;
+                                return;
+                            }
+                        });
+                    }
+
+                    console.log("ticketSelect", ticketSelect);
+                    const getRandomElements = (arr) => {
+                        if (arr.length < 2) {
+                            return [];
+                        }
+                        const index = Math.floor(Math.random() * (arr.length - 1));
+
+                        const element1 = arr[index];
+                        const element2 = arr[index + 1];
+                        console.log('Random element');
+                        console.log(element1,element2);
+                        if(element1.sectionName != element2.sectionName) {
+                            return getRandomElements(arr);
+                        }
+
+
+                        return [element1, element2];
+                    };
+                    //lay ban do
+                    try {
+                        var requestMap = $.ajax({
+                            url: `https://ticketbox.vn/api/v2/seatmap/${idMap}`,
+                            type: "get",
+                        });
+
+                        requestMap.done(function (map) {
+                            console.log(map);
+
+                            var selectMap = map.sections.filter(
+                                (x) => x.ticketTypeId == ticketSelect.id
+                            );
+                            console.log("selectMap", selectMap);
+                            selectMap.map((x) => {
+                                x.rows.map((m) => {
+                                    let allseat = m.seats.filter((s) => s.status == 1);
+                                    if (allseat.length > 0) {
+                                        ticketOrder.push(
+                                            ...allseat.map((t) => {
+                                                return {
+                                                    id: t.id,
+                                                    name: t.name,
+                                                    rowName: m.name,
+                                                    sectionName: x.name,
+                                                    sectionId: x.id,
+                                                    status: null,
+                                                };
+                                            })
+                                        );
+                                    }
+                                });
+                            });
+                            const  tickets = [...getRandomElements(ticketOrder)];
+                            console.log('tickets', tickets);
+                            $.ajax({
+                                url: `https://ticketbox.vn/api/event/${idEvent}/ticket-booking/${idMap}/submit-ticket-info`,
+                                type: "POST",
+                                data: JSON.stringify({
+                                    MobileOS: null,
+                                    capcha: window.tokenV3,
+                                    orderDetails: [
+                                        {
+                                            quantity: 2,
+                                            sections: [
+                                                {
+                                                    isReserveSeating: true,
+                                                    quantity: 2,
+                                                    seats: tickets,
+                                                    sectionId: tickets.length > 0 ? getRandomElements(ticketOrder)[0].sectionId : null,
+                                                },
+                                            ],
+                                            ticketTypeId: ticketSelect.id,
+                                        },
+                                    ],
+                                    secretKey: "",
+                                    securityToken: window.securityToken,
+                                }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (dt) {
+                                    if (dt.data.buyerInfo) {
+                                        console.log("OK", dt);
+                                        if (question.length > 0) {
+                                            window.location.replace(
+                                                `https://ticketbox.vn/event/${idEvent}/ticket-booking/${idMap}?opm=tbox.edp.buybox.7#/step-question-form`
+                                            );
+                                        } else {
+                                            window.location.replace(
+                                                `https://ticketbox.vn/event/${idEvent}/ticket-booking/${idMap}?opm=tbox.edp.buybox.7#/step2`
+                                            );
+                                        }
+                                    } else {
+                                        setTimeout(()=>{
+                                            window.location.reload();
+                                        },2000);
+                                    }
+                                },
+                            });
+                        });
+                        requestMap.fail(function () {
+                            $.ajax({
+                                url: `https://ticketbox.vn/api/event/${idEvent}/ticket-booking/${idMap}/submit-ticket-info`,
+                                type: "POST",
+                                data: JSON.stringify({
+                                    MobileOS: null,
+                                    capcha: window.tokenV3,
+                                    orderDetails: [
+                                        {
+                                            ticketTypeId: ticketSelect.id,
+                                            quantity: 2,
+                                            sections: [],
+                                        },
+                                    ],
+                                    secretKey: "",
+                                    securityToken: window.securityToken,
+                                }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (dt) {
+                                    if (dt.data.buyerInfo) {
+                                        console.log("OK", dt);
+                                        if (question.length > 0) {
+                                            window.location.replace(
+                                                `https://ticketbox.vn/event/${idEvent}/ticket-booking/${idMap}?opm=tbox.edp.buybox.7#/step-question-form`
+                                            );
+                                        } else {
+                                            window.location.replace(
+                                                `https://ticketbox.vn/event/${idEvent}/ticket-booking/${idMap}?opm=tbox.edp.buybox.7#/step2`
+                                            );
+                                        }
+                                    } else {
+                                        setTimeout(()=>{
+                                            window.location.reload();
+                                        },2000);
+                                    }
+                                },
+                            });
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
+                });
+            }
+            if (window.location.href.includes("step2")) {
+                var checkClick = true;
+                setInterval(()=> {
+
+                    var ev = new Event("input", { bubbles: true });
+                    document.querySelector('input[name="lastName"]').value = lastName;
+                    document.querySelector('input[name="lastName"]').dispatchEvent(ev);
+                    document.querySelector('input[name="firstName"]').focus();
+                    var ev2 = new Event("input", { bubbles: true });
+                    document.querySelector('input[name="firstName"]').value = firstName;
+                    document.querySelector('input[name="firstName"]').dispatchEvent(ev2);
+                    document.querySelector('input[name="email"]').focus();
+                    var ev3 = new Event("input", { bubbles: true });
+                    document.querySelector('input[name="email"]').value = email;
+                    document.querySelector('input[name="email"]').dispatchEvent(ev3);
+                    document.querySelector('input[name="confirmEmail"]').focus();
+                    var ev4 = new Event("input", { bubbles: true });
+                    document.querySelector('input[name="confirmEmail"]').value = email;
+                    document.querySelector('input[name="confirmEmail"]').dispatchEvent(ev4);
+                    document.querySelector('input[name="phoneNumber"]').focus();
+                    var ev5 = new Event("input", { bubbles: true });
+                    document.querySelector('input[name="phoneNumber"]').value = phone;
+                    document.querySelector('input[name="phoneNumber"]').dispatchEvent(ev5);
+                    $('.payment-method')[2].click();
+
+                    setTimeout(()=> {
+                        if(checkClick){
+                            $('.checkout-section .ladda-button')[0].click();
+                        }
+                        checkClick = false;
+                    },1000)
+                    // setTimeout(()=> {
+                    //   $('.checkout-section .ladda-button')[0].click();
+                    // },2000)
+                    // alert(1);
+                },3000);
+
+
+            }
+        }
+
+
+        // if(window.location.pathname === "/sign-in"){
+        //   if($('.sc-1tm90jj-6')){
+        //     $('.sc-1tm90jj-6')[0].click();
+        //   }
+
+        //   setTimeout(() => {
+        //     var ev = new Event("input", { bubbles: true });
+        //     document.querySelector('input[name="email"]').value = email;
+        //     document.querySelector('input[name="email"]').dispatchEvent(ev);
+        //     document.querySelector('input[name="email"]').focus();
+        //     var ev2 = new Event("input", { bubbles: true });
+        //     document.querySelector('input[name="password"]').value = pass;
+        //     document.querySelector('input[name="password"]').dispatchEvent(ev2);
+        //     document.querySelector('input[name="password"]').focus();
+        //     setTimeout(() => { 
+        //       document.querySelector('.sc-1455axh-2 button').removeAttribute("disabled");
+        //       document.querySelector('.sc-1455axh-2 button').click()
+        //     },1000);
+        //   }, 1000);
+        // }
+    }, 2000);
+};
+```
+              
+            
