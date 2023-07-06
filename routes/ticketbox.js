@@ -80,6 +80,8 @@ router.get('/ticketStatus', async function (req, res, next) {
                     let ticketItem = resData.currentShowing.ticketTypes[i];
                     data.ticketData.push({
                         id: ticketItem.id,
+                        displayOrder: ticketItem.displayOrder,
+                        applyingPrice: ticketItem.applyingPrice,
                         title: ticketItem.title,
                         maxOrder: ticketItem.maxTixPerOrder,
                         soldOut: ticketItem.isSoldOut,

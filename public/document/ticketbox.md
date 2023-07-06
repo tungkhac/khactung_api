@@ -184,15 +184,29 @@ https://ticketbox.vn/api/event/87284/ticket-booking/74120/submit-order
 ##### Code auto
 
 ```
+// ==UserScript==
+// @name New Script
+// @namespace Script Runner Pro
+// @match *://*/*
+// @grant none
+// ==/UserScript==
+console.log('000000000000000000000000000000');
 window.onload = function () {
-    const keyworld = "VIP";
+    const keyworld = "STANDARD 2";
     const email = "khactung9x@gmail.com";
     const pass = "";
     const phone = "0775163382";
     const firstName = "Tung";
-    const lastName = "Nguyen Khac";
+    const lastName = "Nguyen";
+    const email2 = "khactung9x@gmail.com";
+    const phone2 = "0775163382";
+    const firstName2 = "Tung";
+    const lastName2 = "Nguyen";
+  
+  console.log('11111111111111111111111111111', keyworld);
+  
     setTimeout(() => {
-
+        console.log('-----setTimeout');
         if (
             window.location.href.includes("event") &&
             window.location.href.includes("ticket-booking")
@@ -228,6 +242,7 @@ window.onload = function () {
                     }
                     var question = data.form ? data.form.ticketFormQuestions : [];
                     var formAnswers = [];
+                    var formAnswers2 = [];
                     function answerData (q) {
                         var upQuestion = q.toUpperCase();
                         if(upQuestion.includes('TÊN') && upQuestion.includes('HỌ')){
@@ -251,6 +266,29 @@ window.onload = function () {
 
                         return 'Email: ' + email + '. SDT: '+phone;
                     }
+                    function answerData2 (q) {
+                        var upQuestion = q.toUpperCase();
+                        if(upQuestion.includes('TÊN') && upQuestion.includes('HỌ')){
+                            return lastName2 + ' ' + firstName2;
+                        }
+                        if(upQuestion.includes('TÊN')){
+                            return firstName2;
+                        }
+                        if(upQuestion.includes('HỌ')){
+                            return lastName2;
+                        }
+                        if(upQuestion.includes('EMAIL')){
+                            return email2;
+                        }
+                        if(upQuestion.includes('SỐ')){
+                            return phone2;
+                        }
+                        if(upQuestion.includes('SINH')){
+                            return '16/08/1989';
+                        }
+
+                        return 'Email: ' + email2 + '. SDT: '+ phone2;
+                    }
                     question.map((x) => {
                         if(x.type === 1){
                             formAnswers.push({
@@ -273,10 +311,50 @@ window.onload = function () {
                                 ],
                                 show: true,
                             });
+                            formAnswers2.push({
+                                id: 0,
+                                formAnswerSheetId: 0,
+                                formQuestionId: x.id,
+                                formAnswerChoices: [
+                                    {
+                                        id: 0,
+                                        formAnswerId: 0,
+                                        formAnswerChoiceComponents: [
+                                            {
+                                                id: 0,
+                                                formAnswerChoiceId: 0,
+                                                formQuestionOptionId: null,
+                                                answer: answerData2(x.question),
+                                            },
+                                        ],
+                                    },
+                                ],
+                                show: true,
+                            });
                         }
 
                         if(x.type === 3){
                             formAnswers.push({
+                                id: 0,
+                                formAnswerSheetId: 0,
+                                formQuestionId: x.id,
+                                formAnswerChoices: [
+                                    {
+                                        id: 0,
+                                        formAnswerId: 0,
+                                        formAnswerChoiceComponents: [
+                                            {
+                                                id: 0,
+                                                formAnswerChoiceId: 0,
+                                                formQuestionOptionId: x.formQuestionOptions[0].id,
+                                                answer:  x.formQuestionOptions[0].optionText,
+                                            },
+                                        ],
+                                    },
+                                ],
+                                show: true,
+                            });
+                            formAnswers2.push({
                                 id: 0,
                                 formAnswerSheetId: 0,
                                 formQuestionId: x.id,
@@ -322,7 +400,25 @@ window.onload = function () {
                                     ticketType: ticketSelect,
                                     open: true,
                                     valid: true,
-                                }
+                                },
+                                {
+                                    id: 0,
+                                    eventId: idEvent,
+                                    ticketTypeId: ticketSelect.id,
+                                    ticketId: null,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    email: email,
+                                    phoneNumber: phone,
+                                    website: null,
+                                    company: null,
+                                    jobTitle: null,
+                                    isCommonForOrder: false,
+                                    formAnswers: formAnswers2,
+                                    ticketType: ticketSelect,
+                                    open: true,
+                                    valid: true,
+                                },
                             ],
                             secretKey: "",
                         }),
