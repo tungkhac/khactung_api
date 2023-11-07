@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha test/**/*.spec.js --timeout 60000"
   },
   "repository": {
     "type": "git",
@@ -21,19 +21,26 @@
   },
   "homepage": "https://github.com/tungkhac/khactung_api#readme",
   "dependencies": {
+    "assert": "^2.1.0",
     "axios": "^1.4.0",
     "body-parser": "^1.19.1",
     "config": "^3.3.8",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "express": "~4.17.3",
     "express-fileupload": "^1.2.1",
     "http-errors": "~1.6.2",
     "jade": "^0.29.0",
     "lodash": "^4.17.21",
+    "mocha": "^10.2.0",
     "moment-timezone": "^0.5.21",
     "mongoose": "^6.1.6",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "selenium-webdriver": "^4.15.0",
+    "oauth-1.0a": "^2.2.6",
+    "querystring": "^0.2.1",
+    "readline": "^1.3.0"
   }
 }
