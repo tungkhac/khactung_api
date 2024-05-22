@@ -1,3 +1,17 @@
 {
-    "port" : "8801"
+  "port" : "8801",
+
+  "blockvision_api": "https://api.blockvision.org/v2/",
+  "blockvision_api_key": "2gifzY9fADQ2B2i5usYN0Z6fK9x",
+  
+  "x_client_id": "XzZuZFBrRVZvU0ZlWXJlYXBJMFY6MTpjaQ",
+  "x_client_secret": "uB1MGdL3uHGs3qaadRjL9hJ-fnJo5IFreSvqfH6nL9Rb66zy0N",
+  
+  "x_consumer_api_key": "EWNjBXw0mZR02G6cTYYJfKaXq",  
+  "x_consumer_api_key_secret": "MXIabgaTKrtf6hkvaIC3RByxoMKVYBK9eTka0A27Tv71Xok7YB",  
+  "x_auth_bearer_token": "AAAAAAAAAAAAAAAAAAAAAAu5pgEAAAAAR1ZvqdFb7dNnq2pp8xD%2FWrSU7fg%3DUApe31sSRl7E7xnrgBFAjhYrXh5jtoCsxTLGTCovNCpo03BL7h",
+  "x_authr_api_key": "1691787583318364160-MERW43PdgyXAJNEJLu3ieZYU3MiQp2",
+  "x_auth_api_key_secret": "D5tqJvQSViLZk5v9AE9VfosSkm2iRFQUhAZld347w45WX"
+  
+  
 }

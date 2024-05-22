@@ -1,0 +1,25 @@
+extends layout
+block content
+    style(type='text/css')
+        .p {
+           margin: 2px 0px;
+        }
+        .balance_container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 0 10px;
+        }
+       
+    h3= label
+
+    p='Address total: ' + data.address_total
+    p='USD value: ' + data.usd_value
+    p='OCEAN total: ' + data.ocean_total
+    <br/>
+    <br/>
+    .balance_container
+        - for(let i=0; i<data.balance.length; i++) {
+            - item= data.balance[i]
+            p=`Wallet ${i+1}: ${item.address} | `
+                b=item.ocean
+        - }

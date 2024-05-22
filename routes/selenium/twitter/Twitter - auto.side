@@ -1,0 +1,109 @@
+{
+  "id": "6bd53fa6-df28-4761-8291-3466ac283359",
+  "version": "2.0",
+  "name": "Twitter - auto",
+  "url": "https://twitter.com",
+  "tests": [{
+    "id": "8191f4ec-5771-4f4d-b86f-69981459368f",
+    "name": "open home page",
+    "commands": [{
+      "id": "42582490-7c6a-481f-a238-4a91b7affe94",
+      "comment": "",
+      "command": "open",
+      "target": "/home",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8809e68d-fd56-4d2c-98d9-5f2ecb615523",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.css-1dbjc4n",
+      "targets": [],
+      "value": "10000"
+    }, {
+      "id": "b27f20dc-fb1a-45c3-9414-a50cbd50b790",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo({   top: 500,   behavior: \"smooth\", });",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2139d841-bde9-4f32-952d-4108280b0812",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "1000"
+    }, {
+      "id": "9a588fa1-f5f4-4060-8eb5-e2e8b9c31c56",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo({   top: 1000,   behavior: \"smooth\", });",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c8dfcae9-caf2-4bf7-8448-0cb6962d32c1",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "1000"
+    }, {
+      "id": "c8f6f64d-7237-4779-b81b-dac1648982a8",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo({   top: 1500,   behavior: \"smooth\", });",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "70b3c89f-0f9f-4735-8f7a-98537f9cba30",
+    "name": "upload video",
+    "commands": [{
+      "id": "4948baff-462e-4c6d-85be-819e168a149f",
+      "comment": "",
+      "command": "open",
+      "target": "/home",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "32753a50-35d5-4d31-8984-39e1a032d877",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.css-1dbjc4n",
+      "targets": [],
+      "value": "10000"
+    }, {
+      "id": "ffaede8d-e1b0-4088-96a0-e4904c9c2023",
+      "comment": "",
+      "command": "//clickAt",
+      "target": "data-testid=ScrollSnap-List > div[aria-label=\"Add photos or video\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ab40f84d-6be4-42ef-a864-11d540082057",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//input[@type='file']",
+      "targets": [],
+      "value": "/Users/nguyen.khac.tung/Desktop/reel2/Reel 2023-08 (76).mp4"
+    }]
+  }],
+  "suites": [{
+    "id": "c8abb90b-5fc3-40d3-8882-6f06a9caff08",
+    "name": "Surf",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["8191f4ec-5771-4f4d-b86f-69981459368f"]
+  }, {
+    "id": "ffe5989e-1806-4314-94fd-c52a4302aec5",
+    "name": "upload video",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["70b3c89f-0f9f-4735-8f7a-98537f9cba30"]
+  }],
+  "urls": ["https://twitter.com/home", "https://twitter.com/"],
+  "plugins": []
+}
