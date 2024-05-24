@@ -1,8 +1,7 @@
 {
   "port" : "8801",
 
-  "blockvision_api": "https://api.blockvision.org/v2/",
-  "blockvision_api_key": "2gifzY9fADQ2B2i5usYN0Z6fK9x",
+  "sui_rpc_mainnet": "https://wallet-rpc.mainnet.sui.io/",
   
   "x_client_id": "XzZuZFBrRVZvU0ZlWXJlYXBJMFY6MTpjaQ",
   "x_client_secret": "uB1MGdL3uHGs3qaadRjL9hJ-fnJo5IFreSvqfH6nL9Rb66zy0N",

@@ -11,6 +11,25 @@ const axios = require('axios');
 const config = require('config');
 
 const _balanceDivision = 1000000000;
+const _sui_rpc_request = {
+    coin_type_list: {
+        sui: '0x2::sui::SUI',
+        ocean: '0xa8816d3a6e3136e86bc2873b1f94a15cadc8af2703c075f2d546c2ae367f4df9::ocean::OCEAN'
+    },
+    /*Input address:
+    [
+        'address'
+    ] 
+    * */
+    getAllBalances: (address_list) => {
+        return {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "suix_getAllBalances",
+            "params": address_list
+        }
+    },
+};
 /*
 Input:
 {
@@ -61,8 +80,8 @@ Output:
     success: true,
     data: {
         address_total: 0,
+        sui_total: 0,
         ocean_total: 0,
-        usd_value: 0,
         balance: [
             {
                 address: '0x..',
@@ -100,8 +119,8 @@ router.post('/balance/ocean', async function (req, res, next) {
 /*Output
 {
     address_total: 0,
+    sui_total: 0,
     ocean_total: 0,
-    usd_value: 0,
     balance: [
         {
             address: '0x..',
@@ -114,66 +133,49 @@ router.post('/balance/ocean', async function (req, res, next) {
 async function getOceanBalance(address_list) {
     let result = {
         address_total: 0,
+        sui_total: 0,
         ocean_total: 0,
-        usd_value: 0,
         balance: [],
     };
     for await (const address of address_list) {
         result.address_total++;
-        
-        /*curl blockvision
-        curl --request GET \
-         --url 'https://api.blockvision.org/v2/sui/account/coins?account=0xe335d84c489084474aac4322fb9ac5173369d27487c404558e99c7c5ec608075' \
-         --header 'accept: application/json' \
-         --header 'x-api-key: 2gifzY9fADQ2B2i5usYN0Z6fK9x'
-        * */
         await axios
-            .get(config.get('blockvision_api') + 'sui/account/coins?account=' + address, {
-                headers: {
-                    'accept': 'application/json',
-                    'x-api-key': config.get('blockvision_api_key'),
-                }
-            })
+            .post(config.get('sui_rpc_mainnet'), _sui_rpc_request.getAllBalances([address]))
             .then(response => {
-                let itemData = response.data;
-                console.log('--- get address:', address, ' status:', itemData.code);
-                /*Response example
-                {
-                  "code": 200,
-                  "message": "OK",
-                  "result": {
-                    "coins": [
-                      {
-                        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
-                        "name": "Sui",
-                        "symbol": "SUI",
-                        "decimals": 9,
-                        "balance": "56649578445",
-                        "verified": true,
-                        "logo": "https://imagedelivery.net/cBNDGgkrsEA-b_ixIp9SkQ/sui.svg/public",
-                        "usdValue": "63.72377845",
-                        "price": "1.1248764809947782",
-                        "priceChangePercentage24H": "-1.88476511",
-                        "objects": 3
-                      },
-                      ...
-                    ],
-                    "usdValue": "78.21255368989998"
-                  }
+                console.log('--- get address:', address, ' status:', response.status);
+                /*Response example "result"
+                [
+                    {
+                        "coinType": "0x2::sui::SUI",
+                        "coinObjectCount": 1,
+                        "totalBalance": "310918952",
+                        "lockedBalance": {}
+                    },
+                    {
+                        "coinType": "0xa8816d3a6e3136e86bc2873b1f94a15cadc8af2703c075f2d546c2ae367f4df9::ocean::OCEAN",
+                        "coinObjectCount": 12,
+                        "totalBalance": "34000000000",
+                        "lockedBalance": {}
+                    }
+                ],
                 * */
 
-                if(itemData.code == 200 && itemData.result && itemData.result.coins) {
-                    result.usd_value += parseFloat(itemData.result.usdValue);
+                if(response.status === 200 && response.data && response.data.result.length) {
+                    let itemResult = response.data.result;
                     //loop coin
-                    for (let i=0; i<itemData.result.coins.length; i++) {
-                        let itemCoin = itemData.result.coins[i];
+                    for (let i=0; i<itemResult.length; i++) {
+                        let itemCoin = itemResult[i];
+                        let itemBalance = parseFloat(itemCoin.totalBalance);
                         // console.log(itemCoin);
-                        if(itemCoin.symbol == 'OCEAN') {
-                            result.ocean_total += parseFloat(itemCoin.balance);
+                        if(itemCoin.coinType == _sui_rpc_request.coin_type_list.ocean) {
+                            result.ocean_total += itemBalance;
                             result.balance.push({
                                 address: address,
-                                ocean: parseFloat(itemCoin.balance) / _balanceDivision,
+                                ocean: parseFloat(itemCoin.totalBalance) / _balanceDivision,
                             })
+                        }
+                        if(itemCoin.coinType == _sui_rpc_request.coin_type_list.sui) {
+                            result.sui_total += itemBalance;
                         }
                     }
                 }
@@ -182,6 +184,7 @@ async function getOceanBalance(address_list) {
                 console.log('error', error);
             });
     }
+    result.sui_total = result.sui_total > 0 ? result.sui_total/_balanceDivision : result.sui_total;
     result.ocean_total = result.ocean_total > 0 ? result.ocean_total/_balanceDivision : result.ocean_total;
     result.balance = common.sort(result.balance, 'desc', 'ocean');
     return result;

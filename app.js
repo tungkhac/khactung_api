@@ -10,7 +10,7 @@ const fileUpload = require('express-fileupload');
 var indexRouter = require('./routes/index');
 var sampleRouter = require('./routes/sample');
 var ticketBoxRouter = require('./routes/ticketbox');
-var blockvisionRouter = require('./routes/sui_blockchain/blockvision/balance_check.js');
+var suiBlockChainRouter = require('./routes/sui_blockchain/rpc_mainet/balance_check.js');
 //var xCreateTweetRouter = require('./routes/twitter/create_tweet');
 
 var app = express();
@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/sample', sampleRouter);
 app.use('/ticketBox', ticketBoxRouter);
-app.use('/blockvision', blockvisionRouter);
+app.use('/sui-blockchain', suiBlockChainRouter);
 // app.use('/x/Tweet', xCreateTweetRouter);
 
 // catch 404 and forward to error handler
