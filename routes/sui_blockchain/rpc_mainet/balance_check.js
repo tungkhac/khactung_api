@@ -163,12 +163,15 @@ async function getOceanBalance(address_list) {
                 if(response.status === 200 && response.data && response.data.result.length) {
                     let itemResult = response.data.result;
                     //loop coin
+                    let itemData = {
+                        address: address,
+                        sui: 0,
+                        ocean: 0,                            
+                    };
                     for (let i=0; i<itemResult.length; i++) {
                         let itemCoin = itemResult[i];
                         let itemBalance = parseFloat(itemCoin.totalBalance);
-                        let itemData = {
-                            address: address,
-                        };
+                        
                         // console.log(itemCoin);
                         if(itemCoin.coinType == _sui_rpc_request.coin_type_list.ocean) {
                             result.ocean_total += itemBalance;
@@ -178,8 +181,8 @@ async function getOceanBalance(address_list) {
                             result.sui_total += itemBalance;
                             itemData.sui = itemBalance / _balanceDivision;
                         }
-                        result.balance.push(itemData);
                     }
+                    result.balance.push(itemData);
                 }
             })
             .catch(error => {

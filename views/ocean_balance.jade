@@ -9,6 +9,13 @@ block content
             border: 1px solid #ddd;
             padding: 0 10px;
         }
+        .coin {
+            width: 150px;
+            display: inline-block;
+        }
+        .seperate {
+            padding: 0 10px;
+        }
        
     h3= label
 
@@ -20,7 +27,8 @@ block content
     .balance_container
         - for(let i=0; i<data.balance.length; i++) {
             - item= data.balance[i]
-            p=`Wallet ${i+1}: ${item.address} (SUI | Ocean) | `
-                b=item.sui
-                b=item.ocean
+            p=`Wallet ${i+1}: ${item.address} | `
+                b.coin=`SUI: ${item.sui}`
+                span.seperate='|'
+                b.coin=`Ocean: ${item.ocean}`
         - }
