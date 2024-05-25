@@ -20,6 +20,7 @@ block content
     .balance_container
         - for(let i=0; i<data.balance.length; i++) {
             - item= data.balance[i]
-            p=`Wallet ${i+1}: ${item.address} | `
+            p=`Wallet ${i+1}: ${item.address} (SUI | Ocean) | `
+                b=item.sui
                 b=item.ocean
         - }

@@ -10,3 +10,4 @@ node_modules
 // Dont push code build
 routes/trendexpress.js
 /.idea/
+tmp/

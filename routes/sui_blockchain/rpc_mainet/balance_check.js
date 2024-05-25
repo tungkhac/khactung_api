@@ -166,17 +166,19 @@ async function getOceanBalance(address_list) {
                     for (let i=0; i<itemResult.length; i++) {
                         let itemCoin = itemResult[i];
                         let itemBalance = parseFloat(itemCoin.totalBalance);
+                        let itemData = {
+                            address: address,
+                        };
                         // console.log(itemCoin);
                         if(itemCoin.coinType == _sui_rpc_request.coin_type_list.ocean) {
                             result.ocean_total += itemBalance;
-                            result.balance.push({
-                                address: address,
-                                ocean: parseFloat(itemCoin.totalBalance) / _balanceDivision,
-                            })
+                            itemData.ocean = itemBalance / _balanceDivision;
                         }
                         if(itemCoin.coinType == _sui_rpc_request.coin_type_list.sui) {
                             result.sui_total += itemBalance;
+                            itemData.sui = itemBalance / _balanceDivision;
                         }
+                        result.balance.push(itemData);
                     }
                 }
             })
