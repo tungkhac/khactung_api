@@ -15,7 +15,7 @@ block content
             display: inline-block;
         }
         .seperate {
-            padding: 0 10px;
+            padding: 0 15px;
         }
        
     h3= label
@@ -28,8 +28,9 @@ block content
     .balance_container
         - for(let i=0; i<data.balance.length; i++) {
             - item= data.balance[i]
-            p=`Wallet ${i+1}: ${item.address} | `
-                span.coin=`SUI: ${item.sui}`
+            p=`Wallet ${i+1}: ${item.address}`
                 span.seperate='|'
-                span.coin=`Ocean: ${item.ocean}`
+                `SUI: ${item.sui}`
+                span.seperate='|'
+                `Ocean: ${item.ocean}`
         - }
