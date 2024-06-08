@@ -30,7 +30,7 @@ block content
             - item= data.balance[i]
             p=`Wallet ${i+1}: ${item.address}`
                 span.seperate='|'
-                `SUI: ${item.sui}`
+                span.coin=`SUI: ${item.sui}`
                 span.seperate='|'
-                `Ocean: ${item.ocean}`
+                span.coin=`Ocean: ${item.ocean}`
         - }
