@@ -28,7 +28,7 @@ block content
         - for(let i=0; i<data.balance.length; i++) {
             - item= data.balance[i]
             p=`Wallet ${i+1}: ${item.address} | `
-                b.coin=`SUI: ${item.sui}`
+                span.coin=`SUI: ${item.sui}`
                 span.seperate='|'
-                b.coin=`Ocean: ${item.ocean}`
+                span.coin=`Ocean: ${item.ocean}`
         - }
