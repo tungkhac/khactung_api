@@ -137,12 +137,15 @@ async function getOceanBalance(address_list) {
         ocean_total: 0,
         balance: [],
     };
+    let addressCount = 0;
     for await (const address of address_list) {
+        if(!address) continue;
+        
         result.address_total++;
         await axios
             .post(config.get('sui_rpc_mainnet'), _sui_rpc_request.getAllBalances([address]))
             .then(response => {
-                console.log('--- get address:', address, ' status:', response.status);
+                console.log(`--- get address ${addressCount}:`, address, ' status:', response.status);
                 /*Response example "result"
                 [
                     {
@@ -160,7 +163,7 @@ async function getOceanBalance(address_list) {
                 ],
                 * */
 
-                if(response.status === 200 && response.data && response.data.result.length) {
+                if(response.status === 200 && response.data && Array.isArray(response.data.result) && response.data.result.length) {
                     let itemResult = response.data.result;
                     //loop coin
                     let itemData = {
