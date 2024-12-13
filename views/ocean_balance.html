@@ -25,11 +25,63 @@
     }
 
     button {
-        font-size: 14px;
-        padding: 6px 10px;
+        font-size: .875rem;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: .375rem;
         font-weight: 600;
-        color: oklch(0.446 0.03 256.802);
+        background-color: rgb(99 102 241);
+        line-height: 1.5rem;
+        align-items: center;
+        display: inline-flex;
+        box-sizing: border-box;
+        border: 0 solid #e5e7eb;
+        
+        
+        
     }
+    button:hover {
+        background-color: rgb(129 140 248);
+    }
+    button[disabled] {
+        cursor: not-allowed;
+    }
+    button svg {
+        display: none;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-left: -.25rem;
+        margin-right: .75rem;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
+        transition-duration: .15s;
+    }
+    button[disabled] svg {
+        display: block;
+    }
+    .opacity-75 {
+        opacity: .75;
+    }
+    .opacity-25 {
+        opacity: .25;
+    }
+    .text-white {
+        color: rgb(255 255 255);
+    }
+    /*start animation*/
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    /*end animation*/
     p {
         margin: 8px 0;
     }
@@ -61,13 +113,20 @@
             <p>Total: <span class="address_input_total"></span></p>
         </div>
         <div>
-            <button type="button" class="submit">Submit</button>
+            <button type="button" class="submit text-white">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Submit
+            </button>
         </div>
     </div>
     <div class="result flex flex-col">
         <p>Address total: <span class="address_total"></span></p>
         <p>SUI total: <span class="sui_total"></span></p>
         <p>OCEAN total: <span class="ocean_total"></span></p>
+        <p class="loading"></p>
         <div class="address_box flex flex-col"></div>
     </div>
 </div>
@@ -355,13 +414,15 @@
                     return false;
                 }
                 $.ajax({
-                    method: "POST",
                     url: "/sui-blockchain/balance/ocean",
+                    type: 'POST',
                     data: {
                         address_list: addressList,
-                    }
-                })
-                    .done(function (res) {
+                    },
+                    beforeSend:function(){
+                        $('button.submit').attr('disabled', true);
+                    },
+                    success: function(res) {
                         console.log(res);
                         if (res.success) {
                             let data = res.data;
@@ -386,7 +447,11 @@
                                 }
                             }
                         }
-                    });
+                    },
+                    complete: function () {
+                        $('button.submit').attr('disabled', false);
+                    }
+                });
             },
             walletInputChange: () => {
                 let addressList = walletData.getWalletFromInput();
