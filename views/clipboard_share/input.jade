@@ -1,0 +1,85 @@
+extends ../layout
+
+block content
+  main.clipboard-card
+    h1 Text
+    if error
+      p.notice.error= error
+    form#share-form(method='post', action='/cb')
+      label(for='text') Content
+      textarea#text(rows='35', maxlength='100000', required, autofocus)
+      input#transport-key(type='hidden', name='transportKey')
+      input#transport-iv(type='hidden', name='transportIv')
+      input#transport-data(type='hidden', name='transportData')
+      button#submit-button(type='submit') Save
+    p
+      a(href='/cb/view') View text
+
+  script(type='text/javascript').
+    (function () {
+      var form = document.getElementById('share-form');
+      var textInput = document.getElementById('text');
+      var submitButton = document.getElementById('submit-button');
+      var publicKeyBase64 = '!{transportPublicKey}';
+
+      function bytesToBase64(bytes) {
+        var binary = '';
+        for (var index = 0; index < bytes.length; index += 1) {
+          binary += String.fromCharCode(bytes[index]);
+        }
+        return window.btoa(binary);
+      }
+
+      function base64ToBytes(value) {
+        var binary = window.atob(value);
+        var bytes = new Uint8Array(binary.length);
+        for (var index = 0; index < binary.length; index += 1) {
+          bytes[index] = binary.charCodeAt(index);
+        }
+        return bytes;
+      }
+
+      async function encryptForTransport(plainText) {
+        var publicKey = await window.crypto.subtle.importKey(
+          'spki',
+          base64ToBytes(publicKeyBase64),
+          { name: 'RSA-OAEP', hash: 'SHA-256' },
+          false,
+          ['encrypt']
+        );
+        var aesKey = await window.crypto.subtle.generateKey(
+          { name: 'AES-GCM', length: 256 }, true, ['encrypt']
+        );
+        var iv = window.crypto.getRandomValues(new Uint8Array(12));
+        var encryptedData = await window.crypto.subtle.encrypt(
+          { name: 'AES-GCM', iv: iv }, aesKey, new TextEncoder().encode(plainText)
+        );
+        var rawAesKey = await window.crypto.subtle.exportKey('raw', aesKey);
+        var encryptedKey = await window.crypto.subtle.encrypt(
+          { name: 'RSA-OAEP' }, publicKey, rawAesKey
+        );
+        return {
+          key: bytesToBase64(new Uint8Array(encryptedKey)),
+          iv: bytesToBase64(iv),
+          data: bytesToBase64(new Uint8Array(encryptedData))
+        };
+      }
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        submitButton.disabled = true;
+        submitButton.textContent = 'Encrypting...';
+        try {
+          var encrypted = await encryptForTransport(textInput.value);
+          document.getElementById('transport-key').value = encrypted.key;
+          document.getElementById('transport-iv').value = encrypted.iv;
+          document.getElementById('transport-data').value = encrypted.data;
+          textInput.value = '';
+          form.submit();
+        } catch (error) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Save';
+          window.alert('Your browser could not encrypt this content.');
+        }
+      });
+    }());

@@ -11,3 +11,6 @@ node_modules
 routes/trendexpress.js
 /.idea/
 tmp/
+!/public/clipboard-share/tmp/
+/public/clipboard-share/tmp/*
+!/public/clipboard-share/tmp/.gitkeep

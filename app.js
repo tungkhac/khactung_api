@@ -11,9 +11,13 @@ var indexRouter = require('./routes/index');
 var sampleRouter = require('./routes/sample');
 var ticketBoxRouter = require('./routes/ticketbox');
 var suiBlockChainRouter = require('./routes/sui_blockchain/rpc_mainet/balance_check.js');
+var clipboardShareRouter = require('./routes/clipboard_share/clipboard_share.js');
 //var xCreateTweetRouter = require('./routes/twitter/create_tweet');
 
 var app = express();
+
+// In production TLS is expected to terminate at one trusted reverse proxy.
+app.set('trust proxy', 1);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,19 +29,27 @@ app.use(fileUpload({
 }));
 //add other middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(function requireHttpsInProduction(req, res, next) {
+  if (process.env.NODE_ENV === 'production' && !req.secure) {
+    return res.status(426).send('HTTPS is required');
+  }
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/sample', sampleRouter);
 app.use('/ticketBox', ticketBoxRouter);
 app.use('/sui-blockchain', suiBlockChainRouter);
+app.use('/cb', clipboardShareRouter);
 // app.use('/x/Tweet', xCreateTweetRouter);
 
 // catch 404 and forward to error handler
