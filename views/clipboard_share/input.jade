@@ -8,7 +8,7 @@ block content
     if success_message
       p.notice.success= success_message
     form#share-form(method='post', action='/cb')
-      label(for='text') Content
+      //- label(for='text') Content
       textarea#text(rows='35', maxlength='100000000', required, autofocus)
       input#transport-key(type='hidden', name='transportKey')
       input#transport-iv(type='hidden', name='transportIv')

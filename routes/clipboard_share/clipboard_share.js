@@ -117,7 +117,7 @@ router.get('/', function (req, res) {
   noStore(res);
   res.render('clipboard_share/input', {
     title: 'Text', saved: req.query.saved === '1', error: null,
-    success_message: req.query.saved === '1' ? 'Submit successfully.' : null,
+    // success_message: req.query.saved === '1' ? 'Submit successfully.' : null,
     transportPublicKey: TRANSPORT_PUBLIC_KEY
   });
 });
@@ -152,7 +152,8 @@ router.post('/', async function (req, res, next) {
   // Forward storage or cryptography errors to the central Express error handler.
   try {
     await saveEncrypted(text);
-    return res.redirect('/cb?saved=1');
+    // return res.redirect('/cb?saved=1');
+    return res.redirect('/cb');
   } catch (error) {
     return next(error);
   }

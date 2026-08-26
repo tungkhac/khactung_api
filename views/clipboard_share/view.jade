@@ -2,9 +2,7 @@ extends ../layout
 
 block content
   main.clipboard-card
-    h1 View text
-    if saved
-      p.notice.success Saved content successfully.
+    h1 View
     if error
       p.notice.error= error
     if data !== null
