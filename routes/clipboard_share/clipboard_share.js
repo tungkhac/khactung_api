@@ -151,7 +151,7 @@ router.post('/', async function (req, res, next) {
   // Forward storage or cryptography errors to the central Express error handler.
   try {
     await saveEncrypted(text);
-    return res.redirect('/cb/view?saved=1');
+    return res.redirect('/cb?saved=1');
   } catch (error) {
     return next(error);
   }
