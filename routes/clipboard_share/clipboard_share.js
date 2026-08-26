@@ -11,7 +11,7 @@ var router = express.Router();
 
 var STORE_DIR = path.join(__dirname, '../../public/clipboard-share/tmp');
 var STORE_FILE = path.join(STORE_DIR, 'latest.enc.json');
-var MAX_TEXT_LENGTH = 100000;
+var MAX_TEXT_LENGTH = 100000000;
 var UNLOCK_PASSWORD = process.env.CLIPBOARD_PASSWORD || 'abcd1234';
 
 // Create an ephemeral RSA key pair for encrypting form data during browser-to-server transport.
@@ -143,7 +143,7 @@ router.post('/', async function (req, res, next) {
   }
   if (text.length > MAX_TEXT_LENGTH) {
     return res.status(413).render('clipboard_share/input', {
-      title: 'Text', saved: false, error: 'Maximum content length is 100,000 characters.',
+      title: 'Text', saved: false, error: 'Maximum content length is 100,000,000 characters.',
       transportPublicKey: TRANSPORT_PUBLIC_KEY
     });
   }
