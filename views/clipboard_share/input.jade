@@ -5,8 +5,8 @@ block content
     h1 Text
     if error
       p.notice.error= error
-    if success_message
-      p.notice.success= success_message
+    //- if success_message
+    //-   p.notice.success= success_message
     form#share-form(method='post', action='/cb')
       //- label(for='text') Content
       textarea#text(rows='35', maxlength='100000000', required, autofocus)
