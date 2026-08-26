@@ -1,13 +1,13 @@
 extends ../layout
 
 block content
-  main.clipboard-card
+  main.cb-card
     h1 View
     if error
       p.notice.error= error
     if data !== null
-      label(for='shared-data') Content
-      textarea#shared-data(rows='35', readonly)= data
+      label(for='data') Content
+      textarea#data(rows='35', readonly)= data
     else
       form(method='post', action='/cb/view')
         label(for='password') Unlock password

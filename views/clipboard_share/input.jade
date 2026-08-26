@@ -1,13 +1,13 @@
 extends ../layout
 
 block content
-  main.clipboard-card
+  main.cb-card
     h1 Text
     if error
       p.notice.error= error
     //- if success_message
     //-   p.notice.success= success_message
-    form#share-form(method='post', action='/cb')
+    form#cb-form(method='post', action='/cb')
       //- label(for='text') Content
       textarea#text(rows='35', maxlength='100000000', required, autofocus)
       input#transport-key(type='hidden', name='transportKey')
@@ -19,7 +19,7 @@ block content
 
   script(type='text/javascript').
     (function () {
-      var form = document.getElementById('share-form');
+      var form = document.getElementById('cb-form');
       var textInput = document.getElementById('text');
       var submitButton = document.getElementById('submit-button');
       var publicKeyBase64 = '!{transportPublicKey}';
